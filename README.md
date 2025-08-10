@@ -1,12 +1,16 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 [![Contributor][contributor-shield]][contributor-url]
+[![Rustc][rust-shield]][rust-url]
 [![PostgreSQL][postgresql-shield]][postgresql-url]
+ 
+
+
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
    <img src="./assets/images/pesona.png" alt="Logo" width="220" height="200">
-  <h2 align="center">Pesona - DB </h2> <br />
+  <h2 align="center">Pesona - BE </h2> <br />
 </p>
 
 
@@ -36,21 +40,17 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This Database for DAPEN.
-
+This Database for Pesona.
 
 <!-- BUILD WITH -->
 #### Built With
-
-* [PostgreSQL](https://www.postgresql.org/)
-* [goose](https://github.com/pressly/goose/)
+* [Rust][rust-url]
+* [PostgreSQL][postgresql-url]
 
 
 <!-- REFERENCES -->
 #### References
-* [ChatGPT](https://chat.deepseek.com/a/chat/s/3d7b2da9-50e6-4650-ac39-6d9f78604ba2)
-
-
+* [ChatGPT](references-1)
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -61,74 +61,71 @@ To get a local copy up and running follow these simple example steps.
 
 <!-- PREREQUISITES -->
 #### Prerequisites
-
 * I use macOS Sonoma 14.6.1 (23G93)
   ```sh
   ❯ uname -a
   Darwin Kernel Version 23.6.0
    ```
-* And then you need to install [goose](https://github.com/pressly/goose/)
-    ```sh
-    ❯ brew install goose
-    ❯ goose --version
-    goose version: v3.22.0
-   ```
-
 
 <!-- INSTALLATION -->
 ## Installation
 
-#### Create the SQL command
-1. Add configuration on ~/.zshrc
+#### Install Depencency
   ```sh
-  ❯ cat ~/.zshrc  | grep -E '^.*GOOSE.*$'
-    export GOOSE_DRIVER=postgres
-    export GOOSE_DBSTRING="host=192.168.18.51 port=5432 user=checklist password=checklist*164 dbname=checklist sslmode=disable" 
-   ```
-2. Creating sql command
-  ```sh
-  ❯ goose dir "./migrations" -s create test sql
+    ❯ cargo install cargo-watch
+    ❯ cargo add tokio --features full
+    ❯ cargo add tokio -F tracing
+    ❯ cargo add futures
+    ❯ cargo add chrono
+    ❯ cargo add log env_logger
+    ❯ cargo add axum --features full
+    ❯ cargo add serde -F derive
+    ❯ cargo add serde_json
+    ❯ cargo add sqlx --features runtime-tokio,chrono,postgres
+    ❯ cargo install cargo-watch
   ```
 
-#### Running migration
-1. run the migration
-  ```sh
-  ❯ cd ${PWD}/data/devops/database/checklist-db/migrations
-  ❯ goose up
-  ``` 
-2. drop all migration
-  ```sh
-  ❯ goose down-to 0
-   ```
+
+<!-- FEATURES -->
+## Features
+- [*] Create README.md
+- [*] Create makefile
+- [*] Create Auth
+- [ ] Create Makefile
+  - [ ] Include external environment file (_**app.env**_)
+  - [ ] All In One service (_**up**_ - _**clean**_)
+  - [ ] Development (_**build**_ - _**run**_ - _**watch**_)
+  - [ ] Development with Docker (_**devel-up**_ - _**devel-stop**_ - _**devel-down**_)
+- [ ] Create Authentication Service
+  - [ ] Create Security Service
+- [ ] Create Authorization Service
+  - [ ] Create Access Control List for User
 
 <!-- Project structure -->
 ## Project Structure
 
 ```sh
 .
+├── assets
+│   └── images
+│       └── pesona.png
+├── Cargo.lock
+├── Cargo.toml
 ├── CHANGELOG.md
-├── kamus.md
+├── LICENSE
 ├── makefile
-├── migrations
-│   ├── 20250000000010_schemas.sql
-│   ├── 20250000000020_sec_params.sql
-│   ├── 20250000000021_utl_generate_id.sql
-│   ├── 20250000000022_log_users.sql
-│   ├── 20250000000126_mst_company.sql
-│   ├── 20250000000130_sec_role.sql
-│   ├── 20250000000131_sec_permission.sql
-│   ├── 20250000000135_sec_user.sql
-│   ├── 20250000000144_sec_user_role.sql
-│   └── 20250000000147_sec_role_permission.sql
 ├── README.md
-├── script_backup
-└── script_restore
+└── src
+    └── main.rs
 ```
-
+<!-- LICENSE -->
+## License
+Distributed under the Proprietary License. See `LICENSE` for more information
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [company-website]:http://sd.com/
+[references-1]:https://chat.deepseek.com/a/chat/s/3d7b2da9-50e6-4650-ac39-6d9f78604ba2
 [contributor-url]: https://github.com/shandysiswandi
 [license-url]: ./LICENSE
 [linkedin-url]: https://linkedin.com/in/dedystyawan
@@ -136,11 +133,7 @@ To get a local copy up and running follow these simple example steps.
 [postgresql-url]: https://www.postgresql.org/
 [contributor-shield]: https://img.shields.io/badge/Contributors-1-orange.svg?style=for-the-badge
 [license-shield]: https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge&logo=opensourceinitiative&logoColor=white
-[linkedin-shield]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white
+[linkedin-shield]: https://custom-icon-badges.demolab.com/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin-white&logoColor=fff
 [rust-shield]: https://img.shields.io/badge/rustc-1.86.0-blue.svg?style=for-the-badge&logo=rust
 [postgresql-shield]: https://img.shields.io/badge/PostgreSQL-17-blue.svg?style=for-the-badge&logo=postgresql&logoColor=white
-[person-url]: https://img.icons8.com/?size=100&id=83190&format=png&color=000000
-[Prometheus]: https://prometheus.io/
-[Traefik]: https://traefik.io/
-[Rust]: https://www.rust-lang.org/tools/install
-[Goose]: https://github.com/pressly/goose/
+

@@ -1,67 +1,48 @@
-include .env
+# ---------------------------------------------------------------------------------------------------
+# Phony Targets (Commands that are not files)
+# ---------------------------------------------------------------------------------------------------
+.PHONY: install run build test test-cov format lint clean migrate-up migrate-down migrate-fix docker-build help git
 
-# create:
-# 	goose -dir $(MIGRATIONS_DIR) create $(filter-out $@,$(MAKECMDGOALS)) sql
+# ---------------------------------------------------------------------------------------------------
+# Development Workflow
+# ---------------------------------------------------------------------------------------------------
 
-# Create with sequence
-# # make create schemas
-create:
-	@if [ -z "$(filter-out $@,$(MAKECMDGOALS))" ]; then \
-		echo "Usage: make create <migration_name>"; \
-		exit 1; \
-	fi; \
-	seq=$$(cat $(SEQ_FILE) 2>/dev/null || echo 0); \
-	seq=$$((seq + 3)); \
-	echo $$seq > $(SEQ_FILE); \
-	filename="2025$$(printf '%010d' $$seq)_$(filter-out $@,$(MAKECMDGOALS))"; \
-	fullpath="$(MIGRATIONS_DIR)/$$filename.sql"; \
-	echo "Creating migration: $$fullpath"; \
-	echo "-- +goose Up" > $$fullpath; \
-	echo "-- +goose StatementBegin" >> $$fullpath; \
-	echo "" >> $$fullpath; \
-	echo "-- +goose StatementEnd" >> $$fullpath; \
-	echo "" >> $$fullpath; \
-	echo "-- +goose Down" >> $$fullpath; \
-	echo "-- +goose StatementBegin" >> $$fullpath; \
-	echo "" >> $$fullpath; \
-	echo "-- +goose StatementEnd" >> $$fullpath; \
-	echo "Migration created successfully with template"
+install: ## Install all required development tools.
+	@echo ">> Installing development tools (cargo-watch, cargo-tarpaulin, goose)..."
+	@$(CARGO) install cargo-watch
+	@$(CARGO) install cargo-tarpaulin
+	@go install github.com/pressly/goose/v3/cmd/goose@latest
 
-dec-seq:
-	@current_seq=$$(cat $(SEQ_FILE) 2>/dev/null || echo 0); \
-	echo "Nilai Sebelum: $$current_seq"; \
-	new_seq=$$((current_seq - 3)); \
-	if [ $$new_seq -lt 0 ]; then \
-		new_seq=0; \
-		echo "Warning: Sequence tidak boleh negatif, di-set ke 0"; \
-	fi; \
-	echo $$new_seq > $(SEQ_FILE); \
-	echo "Nilai Sesudah: $$new_seq"
+run: ## Run the application in watch mode for live reloading.
+	@echo ">> Starting application in watch mode..."
+	@$(CARGO) watch -q -c -w src -x run
 
+build: ## Build the application for release with optimizations.
+	@echo ">> Building release binary..."
+	@$(CARGO) build --release
 
-migrate:
-	goose -dir $(MIGRATIONS_DIR) postgres "user=postgres dbname=$(DB_NAME) sslmode=disable" up
+clean: ## Remove build artifacts.
+	@echo ">> Cleaning up build artifacts..."
+	@$(CARGO) clean
 
-migrate-down:
-	goose -dir $(MIGRATIONS_DIR) postgres "user=postgres dbname=$(DB_NAME) sslmode=disable" down
+# ---------------------------------------------------------------------------------------------------
+# Help
+# ---------------------------------------------------------------------------------------------------
 
-backup-db:
-	@echo "-> Running $@";
-	./script_backup
+help: ## Show this help message.
+	@echo "Usage: make [target]"
+	@echo ""
+	@echo "Targets:"
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
 
-restore-db:
-	@echo "-> Running $@";
-	./script_restore
-
-#   ___ __ ____
-#  / __|  |_  _)
-# ( (_ \)(  )(
-#  \___(__)(__)
-# make git m="testing make for git"
-git-push:
-	@git add .
-	@git commit -m "$(filter-out $@,$(MAKECMDGOALS))"
-	@git push
-
-%:  # Catch-all target untuk menangani argument sebagai parameter
-	@:  # Do nothing
+# ---------------------------------------------------------------------------------------------------
+# Git Repository
+# ---------------------------------------------------------------------------------------------------
+# Usage: 
+#   make git m="your commit message"
+#   or
+#   make git "your commit message" 
+git:
+	@git add . || (echo "Error in git add"; exit 1)
+	@git commit -m "$(if $(m),$(m),$(filter-out $@,$(MAKECMDGOALS)))" || (echo "Error in git commit"; exit 1)
+	@git push || (echo "Error in git push"; exit 1)
