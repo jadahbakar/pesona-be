@@ -88,9 +88,9 @@ To get a local copy up and running follow these simple example steps.
 
 <!-- FEATURES -->
 ## Features
-- [*] Create README.md
-- [*] Create makefile
-- [*] Create Auth
+- [x] Create README.md
+- [x] Create makefile
+- [x] Create Auth
 - [ ] Create Makefile
   - [ ] Include external environment file (_**app.env**_)
   - [ ] All In One service (_**up**_ - _**clean**_)
