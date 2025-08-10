@@ -1,0 +1,63 @@
+# -----------------------------------------------------------------------------
+# Application Configuration
+# -----------------------------------------------------------------------------
+aplication:
+  # Name of the application
+  name: "pesona-be"
+
+  # The address and port the HTTP server will listen on.
+  # 0.0.0.0 means it will listen on all available network interfaces.
+  address: "0.0.0.0:8000"
+
+  # Timeout for incoming requests in seconds.
+  timeout_secs: 10
+
+# -----------------------------------------------------------------------------
+# Database Configuration
+# -----------------------------------------------------------------------------
+database:
+  # The full connection URL for the PostgreSQL database.
+  # Format: postgres://[user]:[password]@[host]:[port]/[database_name]
+  url: "postgres://pesona:pesona*5432@160.191.171.82:5439/pesona"
+  
+  # Maximum number of connections in the pool.
+  max_connections: 5
+
+# -----------------------------------------------------------------------------
+# Logging Configuration
+# -----------------------------------------------------------------------------
+# This is controlled by the RUST_LOG environment variable, but you could add
+# custom logging configurations here if needed.
+# For example:
+log_level: "info"
+
+# -----------------------------------------------------------------------------
+# JWT Configuration
+# -----------------------------------------------------------------------------
+jwt:
+  # A strong, secret key for signing access tokens.
+  # Generate with: openssl rand -base64 64
+  access_secret: "2f3e84fbb83e8bee7377fcbebe790b17b73bde29a849440ffad10a751b4c53c380188bfac23297b3f96ff9a71ae3a93185e67fac6a10fb797c30e59e4e0b6485"
+  
+  # A separate, strong secret key for signing refresh tokens.
+  # Generate with: openssl rand -base64 64
+  refresh_secret: "e4f263ebf3148feab24bcc3e23197958025eae89f46f0c789f87b5ae1774d8052016de950d70505661e7fc926d3bdb158c6033d61e17c4eaedf946b8e98b6c4b"
+
+  # A separate, strong secret key for signing generic tokens.
+  # Generate with: openssl rand -base64 64
+  generic_secret: "1aa58c7cdcbf271879acccca4a975d103f3b73143316eb91b398c771e36e261c22bdd64b46d75de2acb4a3bd2dfb3dc1105fe4fc3c766b0d03978dca6ebd8a64"
+  
+  # Expiration time for access tokens in seconds (e.g., 15 minutes).
+  access_expiration_secs: 900
+  
+  # Expiration time for refresh tokens in seconds (e.g., 7 days).
+  refresh_expiration_secs: 604800
+  
+  # Expiration time for generic tokens in seconds (e.g., 3 minutes).
+  generic_expiration_secs: 180
+
+  # The issuer claim (iss) identifies who created and signed the token.
+  issuer: "pensiun-be-api"
+  
+  # The audience claim (aud) identifies the intended recipient of the token.
+  audience: "web-app"
