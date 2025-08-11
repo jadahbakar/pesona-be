@@ -1,4 +1,4 @@
-use pesona_be::utils::config::{self, Config, ConfigError};
+use pesona_be::utils::config::{Config, ConfigError};
 
 fn main() -> Result<(), ConfigError> {
     println!("Hello, world!");
