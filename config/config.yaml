@@ -21,7 +21,8 @@ database:
   url: "postgres://pesona:pesona*5432@160.191.171.82:5439/pesona"
   
   # Maximum number of connections in the pool.
-  max_connections: 5
+  max_connection: 5
+  
 
 # -----------------------------------------------------------------------------
 # Logging Configuration
