@@ -6,8 +6,14 @@ edition = "2024"
 [dependencies]
 # --- Web & API ---
 axum = { version = "0.8.4", features = ["multipart"] }
+tower = { version = "0.5.2", features = ["timeout", "util"] }
+tower-cookies = { version = "0.11.0", features = ["private"] }
+tower-http = { version = "0.6.6", features = ["compression-full", "cors", "decompression-full", "trace", "timeout"] }
+
 # --- Configuration & Logging ---
 config = { version = "0.15.13", features = ["yaml"] }
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.19", features = ["json", "env-filter", "chrono"] }
 
 # --- Serialization ---
 serde = { version = "1.0.219", features = ["derive"] }
@@ -18,3 +24,7 @@ sqlx = { version = "0.8.6", features = ["macros", "postgres"] }
 
 # --- Security ---
 thiserror = "2.0.12"
+
+# --- Asynchronous Runtime & Concurrency ---
+tokio = { version = "1.47.1", features = ["full"] }
+
