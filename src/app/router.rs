@@ -4,6 +4,9 @@ use crate::app::state::AppState;
 
 pub fn create_router_app(app_state: AppState) -> Router {
     Router::new()
+        .merge(crate::health::inbound::router::create_router(
+            app_state.clone(),
+        ))
         .route(
             "/",
             routing::get(|| async {

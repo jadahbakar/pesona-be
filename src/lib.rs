@@ -13,6 +13,7 @@ use crate::{
     utils::config::Config,
 };
 use std::{error::Error, time::Duration};
+use tracing_subscriber::{EnvFilter, fmt, layer::SubscriberExt, util::SubscriberInitExt};
 
 pub mod app;
 pub mod health;
@@ -35,7 +36,9 @@ pub async fn run() -> Result<(), Box<dyn Error>> {
     let app_state = AppState {
         config: config.clone(),
     };
-    let timeout_secs = Duration::from_secs(app_state.config.get::<u64>("server.timeout_secs")?);
+    let timeout_secs =
+        Duration::from_secs(app_state.config.get::<u64>("application.timeout_secs")?);
+
     let app = router::create_router_app(app_state.clone()).layer(
         ServiceBuilder::new()
             // .layer(middleware::from_fn(request_response_logger))
@@ -45,8 +48,24 @@ pub async fn run() -> Result<(), Box<dyn Error>> {
             .layer(CompressionLayer::new()) // Enables response compression
             .layer(TimeoutLayer::new(timeout_secs)), // Adds a request timeout
     );
-    let server_address = app_state.config.get::<String>("aplication.address")?;
+    let server_address = app_state.config.get::<String>("application.address")?;
     let listener = tokio::net::TcpListener::bind(&server_address).await?;
+
+    let log_level = app_state.config.get::<String>("log_level")?;
+    let env_filter =
+        EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new(log_level));
+
+    tracing_subscriber::registry()
+        .with(env_filter)
+        .with(
+            fmt::layer()
+                .json()
+                .with_target(true) // Include the target (module path)
+                .with_file(true) // Include file names
+                .with_line_number(true) // Include line numbers
+                .with_span_events(fmt::format::FmtSpan::CLOSE),
+        )
+        .init();
 
     tracing::info!("🚀 listening on {}", listener.local_addr()?);
 

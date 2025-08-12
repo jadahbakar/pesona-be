@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------------
 # Application Configuration
 # -----------------------------------------------------------------------------
-aplication:
+application:
   # Name of the application
   name: "pesona-be"
 
@@ -22,7 +22,6 @@ database:
   
   # Maximum number of connections in the pool.
   max_connection: 5
-  
 
 # -----------------------------------------------------------------------------
 # Logging Configuration

@@ -1,4 +1,12 @@
 # ---------------------------------------------------------------------------------------------------
+# Project Variables & Configuration
+# ---------------------------------------------------------------------------------------------------
+# Define tools to ensure consistency
+CARGO := cargo
+GOOSE := goose
+DOCKER := docker
+
+# ---------------------------------------------------------------------------------------------------
 # Phony Targets (Commands that are not files)
 # ---------------------------------------------------------------------------------------------------
 .PHONY: install run build test test-cov format lint clean migrate-up migrate-down migrate-fix docker-build help git
