@@ -90,7 +90,8 @@ To get a local copy up and running follow these simple example steps.
 ## Features
 - [x] Create README.md
 - [x] Create makefile
-- [x] Create Auth
+- [x] Create Health
+- [ ] Create Auth
 - [ ] Create Makefile
   - [ ] Include external environment file (_**app.env**_)
   - [ ] All In One service (_**up**_ - _**clean**_)
