@@ -12,9 +12,9 @@ use crate::{
     app::{router, state::AppState},
     utils::config::Config,
 };
+use sqlx::postgres::PgPoolOptions;
 use std::{error::Error, time::Duration};
 use tracing_subscriber::{EnvFilter, fmt, layer::SubscriberExt, util::SubscriberInitExt};
-
 pub mod app;
 pub mod health;
 pub mod utils;
@@ -27,7 +27,7 @@ pub async fn run() -> Result<(), Box<dyn Error>> {
 
     let config = Config::new("./config/config.yaml")?;
     // Initialize database pooling
-    let db_pool = sqlx::postgres::PgPoolOptions::new()
+    let db_pool = PgPoolOptions::new()
         .max_connections(config.get::<u32>("database.max_connection")?)
         .connect(&config.get::<String>("database.url")?)
         .await?;
@@ -35,6 +35,7 @@ pub async fn run() -> Result<(), Box<dyn Error>> {
     // Assemble the final AppState from the shared resources and module states.
     let app_state = AppState {
         config: config.clone(),
+        db: db_pool,
     };
     let timeout_secs =
         Duration::from_secs(app_state.config.get::<u64>("application.timeout_secs")?);
