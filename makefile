@@ -54,3 +54,6 @@ git:
 	@git add . || (echo "Error in git add"; exit 1)
 	@git commit -m "$(if $(m),$(m),$(filter-out $@,$(MAKECMDGOALS)))" || (echo "Error in git commit"; exit 1)
 	@git push || (echo "Error in git push"; exit 1)
+
+pull:
+	@git pull --rebase 
