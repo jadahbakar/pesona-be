@@ -26,6 +26,6 @@ impl AuthnService {
 #[async_trait]
 impl AuthnUseCase for AuthnService {
     async fn login(&self, input: LoginInput) -> Result<LoginOutput, AppError> {
-        Ok(())
+
     }
 }
