@@ -1,5 +1,5 @@
 #[derive(Debug)]
-pub struct user {
+pub struct User {
     pub id: i64,
     pub status: i32,
     pub company: i64,
@@ -9,7 +9,7 @@ pub struct user {
     pub is_login: bool,
 }
 
-impl user {
+impl User {
     pub fn new(
         id: i64,
         status: i32,
