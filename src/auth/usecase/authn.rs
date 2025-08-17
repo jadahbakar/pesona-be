@@ -1,12 +1,15 @@
 use std::sync::Arc;
 
-use async_trait::async_trait;
+// use async_trait::async_trait;
 use config::Config;
 use validator::Validate;
 
 use crate::{
     app::Error::AppError,
-    auth::domain::{entity::user::User, inout::prelude::{LoginInput, LoginOutput}},
+    auth::domain::{
+        entity::user::User,
+        inout::prelude::{LoginInput, LoginOutput},
+    },
 };
 
 #[derive(Clone)]
@@ -23,17 +26,18 @@ impl AuthnService {
         Self { config }
     }
 
-    async fn authenticate_user(&self, email: &str, password: &str) -> Result<User, AppError> {
-        let user = self.
-    }
+    // async fn authenticate_user(&self, email: &str, password: &str) -> Result<User, AppError> {
+    //     // let user = self.
+    //     Ok(())
+    // }
 }
 
-#[async_trait]
-impl AuthnUseCase for AuthnService {
-    async fn login(&self, input: LoginInput) -> Result<LoginOutput, AppError> {
-        input.validate()?;
+// #[async_trait]
+// impl AuthnUseCase for AuthnService {
+//     async fn login(&self, input: LoginInput) -> Result<LoginOutput, AppError> {
+//         input.validate()?;
 
-        let user = self.au
-
-    }
-}
+//         // let user = self.au
+//         Ok(())
+//     }
+// }
