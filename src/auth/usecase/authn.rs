@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-// use async_trait::async_trait;
+use async_trait::async_trait;
 use config::Config;
 use validator::Validate;
 
@@ -26,18 +26,18 @@ impl AuthnService {
         Self { config }
     }
 
-    // async fn authenticate_user(&self, email: &str, password: &str) -> Result<User, AppError> {
-    //     // let user = self.
-    //     Ok(())
-    // }
+    async fn authenticate_user(&self, email: &str, password: &str) -> Result<User, AppError> {
+        // let user = self.
+        todo!()
+    }
 }
 
-// #[async_trait]
-// impl AuthnUseCase for AuthnService {
-//     async fn login(&self, input: LoginInput) -> Result<LoginOutput, AppError> {
-//         input.validate()?;
+#[async_trait]
+impl AuthnUseCase for AuthnService {
+    async fn login(&self, input: LoginInput) -> Result<LoginOutput, AppError> {
+        input.validate()?;
 
-//         // let user = self.au
-//         Ok(())
-//     }
-// }
+        // let user = self.au
+        todo!()
+    }
+}
