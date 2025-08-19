@@ -9,6 +9,8 @@ DOCKER := docker
 # ---------------------------------------------------------------------------------------------------
 # Phony Targets (Commands that are not files)
 # ---------------------------------------------------------------------------------------------------
+%:
+    @:
 .PHONY: install run build test test-cov format lint clean migrate-up migrate-down migrate-fix docker-build help git
 
 # ---------------------------------------------------------------------------------------------------
@@ -54,6 +56,9 @@ git:
 	@git add . || (echo "Error in git add"; exit 1)
 	@git commit -m "$(if $(m),$(m),$(filter-out $@,$(MAKECMDGOALS)))" || (echo "Error in git commit"; exit 1)
 	@git push || (echo "Error in git push"; exit 1)
+#     @git add . || (echo "Error in git add"; exit 1)
+#     @git commit -m "$(m)" || (echo "Error in git commit"; exit 1)
+#     @git push || (echo "Error in git push"; exit 1)
 
 pull:
 	@git pull --rebase 
