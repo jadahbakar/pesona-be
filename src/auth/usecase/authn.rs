@@ -17,6 +17,7 @@ pub struct AuthnService {
     config: Arc<Config>,
 }
 
+#[async_trait]
 pub trait AuthnUseCase: Send + Sync {
     async fn login(&self, input: LoginInput) -> Result<LoginOutput, AppError>;
 }
