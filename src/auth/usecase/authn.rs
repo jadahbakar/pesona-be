@@ -5,14 +5,15 @@ use config::Config;
 use validator::Validate;
 
 use crate::{
-    app::Error::AppError,
+    app::error::AppError,
     auth::domain::{
         entity::user::User,
         inout::prelude::{LoginInput, LoginOutput},
     },
 };
 
-#[derive(Clone)]
+#[warn(dead_code)]
+// #[derive(Clone)]
 pub struct AuthnService {
     config: Arc<Config>,
 }
@@ -26,8 +27,9 @@ impl AuthnService {
     pub fn new(config: Arc<Config>) -> Self {
         Self { config }
     }
-
-    async fn authenticate_user(&self, email: &str, password: &str) -> Result<User, AppError> {
+    #[warn(dead_code)]
+    async fn authenticate_user(&self, email: &str, _password: &str) -> Result<User, AppError> {
+        let _ = email;
         // let user = self.
         todo!()
     }

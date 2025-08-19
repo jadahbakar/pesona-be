@@ -1,7 +1,7 @@
 use axum::Json;
 use axum::http::StatusCode;
 use axum::response::IntoResponse;
-use axum::response::{self, Response};
+use axum::response::Response;
 use serde::Serialize;
 use serde_json::json;
 use thiserror::Error;
