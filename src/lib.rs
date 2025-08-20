@@ -16,8 +16,6 @@ use sqlx::postgres::PgPoolOptions;
 use std::{error::Error, time::Duration};
 use tracing_subscriber::{EnvFilter, fmt, layer::SubscriberExt, util::SubscriberInitExt};
 pub mod app;
-pub mod auth;
-pub mod health;
 
 pub async fn run() -> Result<(), Box<dyn Error>> {
     // Create a broadcast channel to signal shutdown to all application components.
