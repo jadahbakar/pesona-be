@@ -2,8 +2,21 @@
 name = "pesona-be"
 version = "0.1.0"
 edition = "2024"
+description = "Pesona Backend"
+license = "MIT"
+repository = "https://github.com/dedystyawan/pesona-be"
+readme = "README.md"
 
-[dependencies]
+# -----------------------------------------------------------------------------
+# Workspace Members
+# -----------------------------------------------------------------------------
+[workspace]
+members = ["crates/app-core", "crates/health", "."]
+
+# -----------------------------------------------------------------------------
+# Workspace Shared Dependencies
+# -----------------------------------------------------------------------------
+[workspace.dependencies]
 # --- Web & API ---
 axum = { version = "0.8.4", features = ["multipart"] }
 tower = { version = "0.5.2", features = ["timeout", "util"] }
@@ -29,3 +42,28 @@ validator = { version = "0.20.0", features = ["derive"] }
 # --- Asynchronous Runtime & Concurrency ---
 tokio = { version = "1.47.1", features = ["full"] }
 
+# local
+app-core = { path = "crates/app-core" }
+health = { path = "crates/health" }
+
+# -----------------------------------------------------------------------------
+# Dependencies
+# -----------------------------------------------------------------------------
+[dependencies]
+# Local packages
+app-core = { workspace = true }
+health = { workspace = true }
+# third party
+axum = { workspace = true }
+tower = { workspace = true }
+tower-cookies = { workspace = true }
+tower-http = { workspace = true }
+config ={ workspace = true}
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+serde = { workspace = true}
+serde_json = { workspace = true }
+sqlx = { workspace = true }
+thiserror ={ workspace = true}
+validator={ workspace = true}
+tokio = { workspace = true }

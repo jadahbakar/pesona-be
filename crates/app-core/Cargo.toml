@@ -4,3 +4,11 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+serde = { workspace = true }
+config = { workspace = true}
+thiserror = { workspace = true}
+axum ={ workspace = true}
+serde_json ={ workspace = true}
+validator ={ workspace = true}
+tracing ={ workspace = true}
+sqlx ={ workspace = true}
