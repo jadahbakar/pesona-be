@@ -865,8 +865,10 @@ dependencies = [
 name = "health"
 version = "0.1.0"
 dependencies = [
+ "app-core",
  "axum",
  "serde_json",
+ "sqlx",
 ]
 
 [[package]]

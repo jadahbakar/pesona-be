@@ -2,9 +2,9 @@ use axum::{Json, extract::State, http::StatusCode, response::IntoResponse};
 use serde_json::json;
 use std::sync::Arc;
 
-use crate::app::state::AppState;
+use crate::inbound::state::HealthState;
 
-pub async fn health(State(state): State<Arc<AppState>>) -> impl IntoResponse {
+pub async fn health(State(state): State<Arc<HealthState>>) -> impl IntoResponse {
     (
         StatusCode::OK,
         Json(json!({

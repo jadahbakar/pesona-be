@@ -18,7 +18,6 @@ use tracing_subscriber::{EnvFilter, fmt, layer::SubscriberExt, util::SubscriberI
 pub mod app;
 pub mod auth;
 pub mod health;
-pub mod utils;
 
 pub async fn run() -> Result<(), Box<dyn Error>> {
     // Create a broadcast channel to signal shutdown to all application components.
